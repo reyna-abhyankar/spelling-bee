@@ -203,7 +203,7 @@ while True:
 
             # hints
             two_letter_list[guess[:2]] -= 1
-            grid[word[0].upper()][len(guess)] -= 1
+            grid[guess[0].upper()][len(guess)] -= 1
             if two_letter_list[guess[:2]] == 0:
                 del two_letter_list[guess[:2]]
             total_v = 0
