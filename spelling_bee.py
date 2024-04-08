@@ -126,7 +126,7 @@ def dump_history():
 # gameplay
 print("Welcome to spelling bee!")
 display_bee(center, edges)
-print("""
+help_menu = """
 Help: 
     • guess letters in lowercase
     • type 'WORDS' in all caps to see which words you've guessed
@@ -137,7 +137,14 @@ Help:
     • type 'SAVE' to save your progress
     • type 'RESTORE' to restore your saved progress
     • type 'EXIT' in all caps to end the game. This will also save your progress
-    """)
+    • type 'HELP' to see this menu again
+
+Warning: 
+    SAVE/EXIT will automatically overwrite any previously saved progress.
+    Remember to RESTORE if you are coming back to the game and have unsaved progress.
+    Killing the program (^C) will NOT save any progress.
+"""
+print(help_menu)
 score = 0
 words = set()
 guessed = set()
@@ -181,25 +188,29 @@ while True:
             today_dirty = words_list.pop(0)
             if today_dirty == today:
                 for word in words_list:
+                    # hints
+                    if word not in words:
+                        two_letter_list[word[:2]] -= 1
+                        grid[word[0].upper()][len(word)] -= 1
+                        if two_letter_list[word[:2]] == 0:
+                            del two_letter_list[word[:2]]
+                        total_v = 0
+                        for k,v in grid[word[0].upper()].items():
+                            total_v += v
+                        if total_v == 0:
+                            del grid[word[0].upper()]
+
                     words.add(word)
                     guessed.add(word)
                     score += answers[word]
                     if word in pangrams:
                         score += 7
 
-                    # hints
-                    two_letter_list[word[:2]] -= 1
-                    grid[word[0].upper()][len(word)] -= 1
-                    if two_letter_list[word[:2]] == 0:
-                        del two_letter_list[word[:2]]
-                    total_v = 0
-                    for k,v in grid[word[0].upper()].items():
-                        total_v += v
-                    if total_v == 0:
-                        del grid[word[0].upper()]
                 print("Progress restored.")
             else:
                 print("ERROR: Attempting to restore progress from different date.")
+    elif guess == "HELP":
+        print(help_menu)
     else:
         if guess.isupper():
             print("ERROR: Unrecognized option. Guess words in lower case, use options in uppercase.")
