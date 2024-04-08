@@ -200,11 +200,11 @@ while True:
                         if total_v == 0:
                             del grid[word[0].upper()]
 
-                    words.add(word)
-                    guessed.add(word)
-                    score += answers[word]
-                    if word in pangrams:
-                        score += 7
+                        words.add(word)
+                        guessed.add(word)
+                        score += answers[word]
+                        if word in pangrams:
+                            score += 7
 
                 print("Progress restored.")
             else:
