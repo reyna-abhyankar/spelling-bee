@@ -174,18 +174,30 @@ while True:
         words_to_dump = [today] + list(words)
         with open('saved.json', 'w') as fd:
             json.dump(words_to_dump, fd)
+        dump_history()
     elif guess == "RESTORE":
         with open('saved.json', 'r') as fd:
             words_list = json.load(fd)
             today_dirty = words_list.pop(0)
             if today_dirty == today:
-                print("Progress restored.")
                 for word in words_list:
                     words.add(word)
                     guessed.add(word)
                     score += answers[word]
                     if word in pangrams:
                         score += 7
+
+                    # hints
+                    two_letter_list[word[:2]] -= 1
+                    grid[word[0].upper()][len(word)] -= 1
+                    if two_letter_list[word[:2]] == 0:
+                        del two_letter_list[word[:2]]
+                    total_v = 0
+                    for k,v in grid[word[0].upper()].items():
+                        total_v += v
+                    if total_v == 0:
+                        del grid[word[0].upper()]
+                print("Progress restored.")
             else:
                 print("ERROR: Attempting to restore progress from different date.")
     else:
