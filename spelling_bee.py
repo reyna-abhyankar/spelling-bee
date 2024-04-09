@@ -102,7 +102,9 @@ def display_bee(center, edges):
     print(f"""
     \t\t    {edges[0]}\n
     \t    {edges[1]}\t\t    {edges[2]}\n
-    \t\t    {center}\n
+    \t\t   \033[1m/ \\\033[0m
+    \t\t   \033[1m {center}\033[0m
+    \t\t   \033[1m\\ /\033[0m\n
     \t    {edges[3]}\t\t    {edges[4]}\n
     \t\t    {edges[5]}\n""")
 
