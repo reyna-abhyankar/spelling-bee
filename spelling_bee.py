@@ -100,10 +100,11 @@ def calculate_ranking(score, total):
 
 def display_bee(center, edges):
     print(f"""
-    \t    {edges[0]}\t    {edges[1]}\n
-    \t{edges[2]}\t{center}\t{edges[3]}\n
-    \t    {edges[4]}\t    {edges[5]}
-    """)
+    \t\t    {edges[0]}\n
+    \t    {edges[1]}\t\t    {edges[2]}\n
+    \t\t    {center}\n
+    \t    {edges[3]}\t\t    {edges[4]}\n
+    \t\t    {edges[5]}\n""")
 
 def dump_history():
     with open('history.json', 'r') as fd:
